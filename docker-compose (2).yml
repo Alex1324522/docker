@@ -1,0 +1,35 @@
+version: "3.3"
+
+services:
+    app:
+      build: .
+      depends_on:
+       - "db"
+      command: bundle exec rake db:migrate
+      volumes:
+       - my_app:/home/app
+       - /etc/resolv.conf:/etc/resolv.conf
+      ports:
+        - "4000:5600"
+      networks:
+       default: 
+
+    db:
+      image: mysql:5.7
+      environment:
+       MYSQL_HOST: db
+       MYSQL_ROOT_PASSWORD: "GEb1CFIKUDpLM!"
+       MYSQL_USER: app
+       MYSQL_PASSWORD: 24633469
+       MYSQL_DATABASE: blog_development
+      volumes:
+      - my_db:/var/lib/mysql
+      networks:
+        default:
+   
+  
+volumes:
+  my_db:
+  my_app:
+networks:
+ default:
